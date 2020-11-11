@@ -1,47 +1,32 @@
-def write_pickup_file(nameWakander_file_path, pickup_file_path, pickup_word):
+def word_pickup(target_string_list, pickup_word, exclusion_word=""):
     discovery = False
-    with open(pickup_file_path, mode="W") as wf:
-        with open(nameWakander_file_path) as f:
-            s = f.readline()
-            if s in pickup_word:
-                discovery = True
-            elif s[0] != " ":
-                discovery = False
-            if discovery:
-                wf.write(s.split(",")[0])
+    ans_list = ""
+    for s in target_string_list:
+        if pickup_word in s and not(exclusion_word in s):
+            discovery = True
+        elif s[0] != " ":
+            discovery = False
+        if discovery:
+            ans_list.append(s)
+    return ans_list
 
-def write_cutall_tool_pickup_file(nameWakander_file_path, pickup_file_path):
+def _file_line_pickup(file_path, pickup_word, exclusion_word=""):
     discovery = False
-    with open(pickup_file_path, mode="W") as wf:
-        with open(nameWakander_file_path) as f:
-            s = f.readline()
-            if s in "axe" and not(s in "pick"):
-                discovery = True
-            elif s[0] != " ":
-                discovery = False
-            if discovery:
-                wf.write(s.split(",")[0])
+    for s in target_string_list:
+        if pickup_word in s and not(exclusion_word in s):
+            discovery = True
+        elif s[0] != " ":
+            discovery = False
+        if discovery:
+            yield s.rstlip("\n")
+    return None
 
-def write_mineall_tool_pickup_file(nameWakander_file_path, pickup_file_path):
+def write_pickup_file(nameWakander_file_path, pickup_file_path, pickup_word, exclusion_word=""):
     discovery = False
     with open(pickup_file_path, mode="W") as wf:
-        with open(nameWakander_file_path) as f:
-            s = f.readline()
-            if s in "pickaxe":
-                discovery = True
-            elif s[0] != " ":
-                discovery = False
-            if discovery:
-                wf.write(s.split(",")[0])
+        for s in _file_line_pickup(nameWakander_file_path, pickup_file_path, pickup_word, exclusion_word):
+            wf.write(s)
+    
 
-def write_mineall_block_pickup_file(nameWakander_file_path, pickup_file_path):
-    discovery = False
-    with open(pickup_file_path, mode="W") as wf:
-        with open(nameWakander_file_path) as f:
-            s = f.readline()
-            if s in "ore":
-                discovery = True
-            elif s[0] != " ":
-                discovery = False
-            if discovery:
-                wf.write(s.split(",")[0])
+def cutall_block_pickup_file(nameWakander_file_path, pickup_file_path):
+    write_pickup_file(nameWakander_file_path, pickup_file_path, "log"):
